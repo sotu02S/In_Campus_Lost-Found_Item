@@ -41,7 +41,7 @@ const SAMPLE_DATA = [
         contact_name: 'Jane Smith', 
         contact_email: 'jane.smith@campus.edu', 
         status: 'unclaimed', 
-        photo_url: 'https://m.media-amazon.com/images/I/719Mep0be6L._AC_UF1000,1000_QL80_.jpg' 
+        photo_url: 'https://images.unsplash.com/photo-1770892729461-5993c257f729?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' 
     },
     { 
         id: 3, 
@@ -450,3 +450,4 @@ function escapeHtml(text) {
 window.markAsClaimed = markAsClaimed;
 
 window.openContactModal = openContactModal;
+
