@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Lost & Found | Host: Soutam Ghosh</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🎓 Campus Lost & Found</h1>
+            <nav>
+                <button id="postItemBtn" class="btn btn-primary">Post Item</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="search-section">
+            <h2>Find Items</h2>
+            <div class="search-controls">
+                <input type="text" id="searchInput" placeholder="Search by description or location..." class="search-input">
+                
+                <select id="typeFilter" class="filter-select">
+                    <option value="all">All Items</option>
+                    <option value="lost">Lost Items</option>
+                    <option value="found">Found Items</option>
+                </select>
+
+                <select id="categoryFilter" class="filter-select">
+                    <option value="all">All Categories</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="clothing">Clothing</option>
+                    <option value="books">Books & Stationery</option>
+                    <option value="accessories">Accessories</option>
+                    <option value="keys">Keys & Cards</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <select id="statusFilter" class="filter-select">
+                    <option value="all">All Status</option>
+                    <option value="unclaimed">Unclaimed</option>
+                    <option value="claimed">Claimed</option>
+                </select>
+
+                <button id="clearFilters" class="btn btn-secondary">Clear Filters</button>
+            </div>
+        </section>
+
+        <section class="items-section">
+            <div id="itemsGrid" class="items-grid">
+                <div class="loading">Loading items...</div>
+            </div>
+        </section>
+    </main>
+
+    <div id="postModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Post an Item</h2>
+            <form id="postItemForm">
+                <div class="form-group">
+                    <label>Type *</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="type" value="lost" required> Lost</label>
+                        <label><input type="radio" name="type" value="found" required> Found</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="title">Title *</label>
+                    <input type="text" id="title" name="title" required placeholder="e.g., Black Backpack">
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category *</label>
+                    <select id="category" name="category" required>
+                        <option value="">Select a category</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="clothing">Clothing</option>
+                        <option value="books">Books & Stationery</option>
+                        <option value="accessories">Accessories</option>
+                        <option value="keys">Keys & Cards</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description *</label>
+                    <textarea id="description" name="description" required rows="4" placeholder="Provide detailed description..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Location *</label>
+                    <input type="text" id="location" name="location" required placeholder="e.g., Library 2nd Floor">
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Date *</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactName">Your Name *</label>
+                    <input type="text" id="contactName" name="contactName" required placeholder="Your full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="contactEmail">Your Email *</label>
+                    <input type="email" id="contactEmail" name="contactEmail" required placeholder="your.email@campus.edu">
+                </div>
+
+                <div class="form-group">
+                    <label for="photo">Photo </label>
+                    <input type="file" id="photo" name="photo" accept="image/*">
+                    <small>Max size: 2MB (Storage limited)</small>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" id="cancelPost">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="detailModal" class="modal">
+        <div class="modal-content modal-large">
+            <span class="close">&times;</span>
+            <div id="itemDetail"></div>
+        </div>
+    </div>
+
+    <div id="messageModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Contact About Item</h2>
+            <form id="messageForm">
+                <div class="form-group">
+                    <label for="senderName">Your Name *</label>
+                    <input type="text" id="senderName" name="senderName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="senderEmail">Your Email *</label>
+                    <input type="email" id="senderEmail" name="senderEmail" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message *</label>
+                    <textarea id="message" name="message" required rows="5" placeholder="Write your message here..."></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                    <button type="button" class="btn btn-secondary" id="cancelMessage">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <footer style="text-align: center; padding: 20px; color: #666; font-size: 0.9rem;">
+        <p>Managed by Host: Soutam Ghosh</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
