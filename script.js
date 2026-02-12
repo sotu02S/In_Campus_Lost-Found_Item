@@ -41,7 +41,7 @@ const SAMPLE_DATA = [
         contact_name: 'Jane Smith', 
         contact_email: 'jane.smith@campus.edu', 
         status: 'unclaimed', 
-        photo_url: 'https://images.unsplash.com/photo-1602143407151-011141959309?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60' 
+        photo_url: 'https://m.media-amazon.com/images/I/719Mep0be6L._AC_UF1000,1000_QL80_.jpg' 
     },
     { 
         id: 3, 
@@ -448,4 +448,5 @@ function escapeHtml(text) {
 
 // Make functions global for inline HTML events
 window.markAsClaimed = markAsClaimed;
+
 window.openContactModal = openContactModal;
