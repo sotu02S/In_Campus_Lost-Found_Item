@@ -15,6 +15,23 @@ const clearFilters = document.getElementById('clearFilters');
 // Local Storage Key
 const STORAGE_KEY = 'campus_lost_found_items';
 
+const CATEGORY_LABELS = {
+    electronics: 'Electronics',
+    clothing: 'Clothing',
+    books: 'Books & Stationery',
+    accessories: 'Accessories',
+    keys: 'Keys & Cards',
+    other: 'Other'
+};
+
+const FALLBACK_IMAGE_SVG = `
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+    <rect width="600" height="400" fill="#f0f0f0"/>
+    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-size="44" fill="#b0b0b0">No Image</text>
+</svg>
+`.trim();
+const FALLBACK_IMAGE_DATA = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(FALLBACK_IMAGE_SVG)}`;
+
 // Initial Sample Data (With Real Images)
 const SAMPLE_DATA = [
     { 
@@ -193,6 +210,7 @@ function displayItems(items) {
     }
 
     itemsGrid.innerHTML = items.map(item => createItemCard(item)).join('');
+    applyImageFallbacks(itemsGrid);
     
     // Add click listeners to cards
     document.querySelectorAll('.item-card').forEach(card => {
@@ -206,8 +224,9 @@ function displayItems(items) {
 // Create Item Card HTML
 function createItemCard(item) {
     const imageHTML = item.photo_url 
-        ? `<img src="${item.photo_url}" alt="${item.title}" class="item-image">`
+        ? `<img src="${item.photo_url}" alt="${escapeHtml(item.title)}" class="item-image" data-fallback="true">`
         : `<div class="item-image placeholder">📦</div>`;
+    const categoryLabel = getCategoryLabel(item.category);
     
     const date = new Date(item.date).toLocaleDateString();
     
@@ -220,7 +239,7 @@ function createItemCard(item) {
                     <span class="item-badge badge-${item.status}">${item.status}</span>
                 </div>
                 <h3 class="item-title">${escapeHtml(item.title)}</h3>
-                <span class="item-category">${escapeHtml(item.category)}</span>
+                <span class="item-category">${escapeHtml(categoryLabel)}</span>
                 <p class="item-description">${escapeHtml(item.description)}</p>
                 <div class="item-meta">
                     <span>📍 ${escapeHtml(item.location)}</span>
@@ -239,8 +258,9 @@ function showItemDetail(itemId) {
     currentItemId = itemId;
     
     const imageHTML = item.photo_url 
-        ? `<img src="${item.photo_url}" alt="${item.title}" class="detail-image">`
+        ? `<img src="${item.photo_url}" alt="${escapeHtml(item.title)}" class="detail-image" data-fallback="true">`
         : `<div class="detail-image placeholder">📦</div>`;
+    const categoryLabel = getCategoryLabel(item.category);
     
     const date = new Date(item.date).toLocaleDateString('en-US', { 
         year: 'numeric', 
@@ -262,7 +282,7 @@ function showItemDetail(itemId) {
                 <div class="detail-badges">
                     <span class="item-badge badge-${item.type}">${item.type}</span>
                     <span class="item-badge badge-${item.status}">${item.status}</span>
-                    <span class="item-category">${escapeHtml(item.category)}</span>
+                    <span class="item-category">${escapeHtml(categoryLabel)}</span>
                 </div>
                 
                 <div class="detail-section">
@@ -294,6 +314,7 @@ function showItemDetail(itemId) {
         </div>
     `;
     
+    applyImageFallbacks(document.getElementById('itemDetail'));
     openModal(detailModal);
 }
 
@@ -435,7 +456,8 @@ function fileToBase64(file) {
 }
 
 function escapeHtml(text) {
-    if (!text) return '';
+    if (text === null || text === undefined) return '';
+    const safeText = String(text);
     const map = {
         '&': '&amp;',
         '<': '&lt;',
@@ -443,11 +465,40 @@ function escapeHtml(text) {
         '"': '&quot;',
         "'": '&#039;'
     };
-    return text.replace(/[&<>"']/g, m => map[m]);
+    return safeText.replace(/[&<>"']/g, m => map[m]);
+}
+
+function getCategoryLabel(category) {
+    if (!category) return '';
+    return CATEGORY_LABELS[category] || category;
+}
+
+function applyImageFallbacks(container) {
+    if (!container) return;
+    container.querySelectorAll('img[data-fallback="true"]').forEach(img => {
+        if (img.complete && img.naturalWidth === 0) {
+            setImageFallback(img);
+            return;
+        }
+        if (img.dataset.fallbackBound === 'true') {
+            return;
+        }
+        img.dataset.fallbackBound = 'true';
+        img.addEventListener('error', handleImageFallback, { once: true });
+    });
+}
+
+function handleImageFallback(event) {
+    const img = event.currentTarget;
+    setImageFallback(img);
+}
+
+function setImageFallback(img) {
+    img.src = FALLBACK_IMAGE_DATA;
+    img.classList.add('image-fallback');
 }
 
 // Make functions global for inline HTML events
 window.markAsClaimed = markAsClaimed;
 
 window.openContactModal = openContactModal;
-
