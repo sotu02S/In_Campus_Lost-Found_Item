@@ -25,11 +25,11 @@ const CATEGORY_LABELS = {
 };
 
 const FALLBACK_IMAGE_SVG = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
-        <rect width="600" height="400" fill="#f0f0f0"/>
-        <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-size="44" fill="#b0b0b0">No Image</text>
-    </svg>
-`;
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+    <rect width="600" height="400" fill="#f0f0f0"/>
+    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-size="44" fill="#b0b0b0">No Image</text>
+</svg>
+`.trim();
 const FALLBACK_IMAGE_DATA = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(FALLBACK_IMAGE_SVG)}`;
 
 // Initial Sample Data (With Real Images)
@@ -476,7 +476,7 @@ function getCategoryLabel(category) {
 function applyImageFallbacks(container) {
     if (!container) return;
     container.querySelectorAll('img[data-fallback="true"]').forEach(img => {
-        if (img.complete && img.naturalWidth === 0) {
+        if (img.complete && img.naturalWidth === 0 && img.naturalHeight === 0) {
             setImageFallback(img);
             return;
         }
