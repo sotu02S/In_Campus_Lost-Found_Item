@@ -476,7 +476,7 @@ function getCategoryLabel(category) {
 function applyImageFallbacks(container) {
     if (!container) return;
     container.querySelectorAll('img[data-fallback="true"]').forEach(img => {
-        if (img.complete && img.naturalWidth === 0 && img.naturalHeight === 0) {
+        if (img.complete && img.naturalWidth === 0) {
             setImageFallback(img);
             return;
         }
