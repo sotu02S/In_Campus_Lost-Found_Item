@@ -3,74 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campus Lost & Found | Host: Soutam Ghosh</title>
+    <meta name="description" content="Campus Lost & Found 2.0 - A beautiful, premium platform to report, browse, and reclaim lost items within the university campus.">
+    <title>Campus Lost & Found | Reconnect Your Belongings</title>
+    <!-- Google Fonts: Outfit & Inter for high-end modern typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
         <div class="container">
-            <h1>🎓 Campus Lost & Found</h1>
-            <nav>
-                <button id="postItemBtn" class="btn btn-primary">Post Item</button>
+            <h1>🎓 <span>Campus Lost & Found</span></h1>
+            <nav class="header-actions">
+                <div id="userProfileBar" class="user-profile-bar" title="Click to configure profile">
+                    <div class="avatar" id="userAvatar">S</div>
+                    <span id="userNameBar">Soutam Ghosh</span>
+                </div>
+                <button id="postItemBtn" class="btn btn-primary">➕ Post Item</button>
             </nav>
         </div>
     </header>
 
     <main class="container">
-        <section class="search-section">
-            <h2>Find Items</h2>
-            <div class="search-controls">
-                <input type="text" id="searchInput" placeholder="Search by description or location..." class="search-input">
-                
-                <select id="typeFilter" class="filter-select">
-                    <option value="all">All Items</option>
-                    <option value="lost">Lost Items</option>
-                    <option value="found">Found Items</option>
-                </select>
-
-                <select id="categoryFilter" class="filter-select">
-                    <option value="all">All Categories</option>
-                    <option value="electronics">Electronics</option>
-                    <option value="clothing">Clothing</option>
-                    <option value="books">Books & Stationery</option>
-                    <option value="accessories">Accessories</option>
-                    <option value="keys">Keys & Cards</option>
-                    <option value="other">Other</option>
-                </select>
-
-                <select id="statusFilter" class="filter-select">
-                    <option value="all">All Status</option>
-                    <option value="unclaimed">Unclaimed</option>
-                    <option value="claimed">Claimed</option>
-                </select>
-
-                <button id="clearFilters" class="btn btn-secondary">Clear Filters</button>
+        <!-- Interactive Stats Hero -->
+        <section class="hero-banner">
+            <div class="hero-content">
+                <h2 class="hero-title">Campus Lost & Found 2.0</h2>
+                <p class="hero-subtitle">Reconnecting student belongings securely. Quickly report found items, describe lost valuables, and message owners directly through our central campus catalog.</p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span id="statTotalItems" class="stat-num">0</span>
+                        <span class="stat-label">Total Reports</span>
+                    </div>
+                    <div class="stat-item">
+                        <span id="statUnclaimed" class="stat-num">0</span>
+                        <span class="stat-label">Active Items</span>
+                    </div>
+                    <div class="stat-item">
+                        <span id="statClaimed" class="stat-num">0</span>
+                        <span class="stat-label">Reclaimed Items</span>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section class="items-section">
-            <div id="itemsGrid" class="items-grid">
-                <div class="loading">Loading items...</div>
-            </div>
-        </section>
+        <!-- Premium Navigation Tabs -->
+        <div class="tabs-container">
+            <button id="browseTabBtn" class="tab-btn active">🔍 Browse Items</button>
+            <button id="inboxTabBtn" class="tab-btn">📬 My Message Inbox <span id="inboxBadge" class="badge" style="display: none;">0</span></button>
+        </div>
+
+        <!-- Tab 1: Browse Items Content -->
+        <div id="browseTabContent" class="tab-content active">
+            <section class="search-section">
+                <h2>Find Items</h2>
+                <div class="search-controls">
+                    <div class="search-input-wrapper">
+                        <!-- Search Icon -->
+                        <svg class="search-icon-svg" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                        <input type="text" id="searchInput" placeholder="Search by title, location, or description..." class="search-input" aria-label="Search Items">
+                    </div>
+                    
+                    <select id="typeFilter" class="filter-select" aria-label="Filter by Type">
+                        <option value="all">All Types</option>
+                        <option value="lost">Lost</option>
+                        <option value="found">Found</option>
+                    </select>
+
+                    <select id="categoryFilter" class="filter-select" aria-label="Filter by Category">
+                        <option value="all">All Categories</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="clothing">Clothing</option>
+                        <option value="books">Books & Stationery</option>
+                        <option value="accessories">Accessories</option>
+                        <option value="keys">Keys & Cards</option>
+                        <option value="other">Other</option>
+                    </select>
+
+                    <select id="statusFilter" class="filter-select" aria-label="Filter by Status">
+                        <option value="all">All Statuses</option>
+                        <option value="unclaimed">Unclaimed</option>
+                        <option value="claimed">Claimed</option>
+                    </select>
+
+                    <select id="sortFilter" class="filter-select" aria-label="Sort Orders">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                    </select>
+
+                    <button id="clearFilters" class="btn btn-secondary" aria-label="Clear all filters">Clear Filters</button>
+                </div>
+            </section>
+
+            <section class="items-section">
+                <div id="itemsGrid" class="items-grid">
+                    <div class="loading">Loading items...</div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Tab 2: Message Inbox Content -->
+        <div id="inboxTabContent" class="tab-content">
+            <section class="inbox-dashboard">
+                <div class="inbox-header">
+                    <h2>Received Messages & Inquiries</h2>
+                    <div class="inbox-stats">
+                        <span id="unreadCountText">0 unread messages</span>
+                    </div>
+                </div>
+                <div id="messageList" class="message-list">
+                    <div class="no-messages">
+                        <div class="inbox-icon">📬</div>
+                        <h3>Your Inbox is Empty</h3>
+                        <p>When other students message you about your posted items, their inquiries will appear here.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
     </main>
 
+    <!-- Modal 1: Post or Edit Item Modal -->
     <div id="postModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Post an Item</h2>
+            <span class="close" id="closePostModal">&times;</span>
+            <h2 id="postModalTitle">Post an Item</h2>
             <form id="postItemForm">
+                <input type="hidden" id="editItemId" name="editItemId">
+                
                 <div class="form-group">
                     <label>Type *</label>
                     <div class="radio-group">
-                        <label><input type="radio" name="type" value="lost" required> Lost</label>
-                        <label><input type="radio" name="type" value="found" required> Found</label>
+                        <label><input type="radio" name="type" value="lost" id="typeLost" required> Lost</label>
+                        <label><input type="radio" name="type" value="found" id="typeFound" required> Found</label>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="title">Title *</label>
-                    <input type="text" id="title" name="title" required placeholder="e.g., Black Backpack">
+                    <input type="text" id="title" name="title" required maxlength="50" placeholder="e.g., Black Nike Backpack">
                 </div>
 
                 <div class="form-group">
@@ -88,12 +160,12 @@
 
                 <div class="form-group">
                     <label for="description">Description *</label>
-                    <textarea id="description" name="description" required rows="4" placeholder="Provide detailed description..."></textarea>
+                    <textarea id="description" name="description" required rows="4" maxlength="500" placeholder="Provide details (color, brand, distinguishing marks, contents)..."></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="location">Location *</label>
-                    <input type="text" id="location" name="location" required placeholder="e.g., Library 2nd Floor">
+                    <input type="text" id="location" name="location" required maxlength="100" placeholder="e.g., Library 2nd Floor Study Room">
                 </div>
 
                 <div class="form-group">
@@ -101,68 +173,98 @@
                     <input type="date" id="date" name="date" required>
                 </div>
 
+                <!-- Custom Photo Upload Dropzone -->
                 <div class="form-group">
-                    <label for="contactName">Your Name *</label>
-                    <input type="text" id="contactName" name="contactName" required placeholder="Your full name">
-                </div>
-
-                <div class="form-group">
-                    <label for="contactEmail">Your Email *</label>
-                    <input type="email" id="contactEmail" name="contactEmail" required placeholder="your.email@campus.edu">
-                </div>
-
-                <div class="form-group">
-                    <label for="photo">Photo </label>
-                    <input type="file" id="photo" name="photo" accept="image/*">
-                    <small>Max size: 2MB (Storage limited)</small>
+                    <label for="photo">Photo Upload</label>
+                    <div class="photo-upload-zone" id="uploadZone">
+                        <span id="uploadZoneText">📁 Click to select file or drop here</span>
+                        <input type="file" id="photo" name="photo" accept="image/*" style="display: none;">
+                    </div>
+                    <div id="imagePreviewContainer" style="display: none; margin-top: 15px; text-align: center;">
+                        <img id="imagePreview" src="" alt="Image Preview" style="max-width: 100%; max-height: 180px; border-radius: var(--border-radius-sm); border: 1px solid var(--border-color);">
+                    </div>
+                    <small>High resolution photos will be auto-optimized on upload.</small>
                 </div>
 
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" id="submitPostBtn" class="btn btn-primary">Submit Post</button>
                     <button type="button" class="btn btn-secondary" id="cancelPost">Cancel</button>
                 </div>
             </form>
         </div>
     </div>
 
+    <!-- Modal 2: Item Detail View Modal -->
     <div id="detailModal" class="modal">
         <div class="modal-content modal-large">
-            <span class="close">&times;</span>
+            <span class="close" id="closeDetailModal">&times;</span>
             <div id="itemDetail"></div>
         </div>
     </div>
 
+    <!-- Modal 3: Contact Owner Modal -->
     <div id="messageModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Contact About Item</h2>
+            <span class="close" id="closeMessageModal">&times;</span>
+            <h2>Send Message to Owner</h2>
             <form id="messageForm">
                 <div class="form-group">
                     <label for="senderName">Your Name *</label>
-                    <input type="text" id="senderName" name="senderName" required>
+                    <input type="text" id="senderName" name="senderName" required maxlength="50">
                 </div>
 
                 <div class="form-group">
                     <label for="senderEmail">Your Email *</label>
-                    <input type="email" id="senderEmail" name="senderEmail" required>
+                    <input type="email" id="senderEmail" name="senderEmail" required maxlength="50" pattern="[a-zA-Z0-9._%+-]+@([a-zA-Z0-9.-]+\.)?edu$" title="Please use a valid university .edu email address">
                 </div>
 
                 <div class="form-group">
                     <label for="message">Message *</label>
-                    <textarea id="message" name="message" required rows="5" placeholder="Write your message here..."></textarea>
+                    <textarea id="message" name="message" required rows="5" maxlength="500" placeholder="Include how they can verify or meet up with you..."></textarea>
                 </div>
 
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Send Message</button>
+                    <button type="submit" class="btn btn-primary">Send Inquiry</button>
                     <button type="button" class="btn btn-secondary" id="cancelMessage">Cancel</button>
                 </div>
             </form>
         </div>
     </div>
+
+    <!-- Modal 4: User Profile Setup Modal -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeProfileModal">&times;</span>
+            <h2>Configure Your Student Profile</h2>
+            <p class="profile-modal-prompt">Setting your profile ensures you receive local notifications and matches items automatically to your student identity.</p>
+            <form id="profileForm">
+                <div class="form-group">
+                    <label for="profileName">Student Full Name *</label>
+                    <input type="text" id="profileName" name="profileName" required maxlength="50" placeholder="e.g., Soutam Ghosh">
+                </div>
+
+                <div class="form-group">
+                    <label for="profileEmail">Student Email *</label>
+                    <input type="email" id="profileEmail" name="profileEmail" required maxlength="50" pattern="[a-zA-Z0-9._%+-]+@([a-zA-Z0-9.-]+\.)?edu$" title="Please use a valid university .edu email address" placeholder="e.g., soutam.ghosh@campus.edu">
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Save Profile</button>
+                    <button type="button" class="btn btn-secondary" id="cancelProfile">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
     
-    <footer style="text-align: center; padding: 20px; color: #666; font-size: 0.9rem;">
-        <p>Managed by Host: Soutam Ghosh</p>
+    <footer>
+        <div class="container">
+            <p>Managed & Coordinated by Host: <strong>Soutam Ghosh</strong></p>
+            <p style="margin-top: 5px; font-size: 0.8rem; opacity: 0.7;">&copy; 2026 Campus Lost & Found 2.0. Built for quick student reconnections.</p>
+        </div>
     </footer>
+
+    <!-- Toast Notifications Container -->
+    <div id="toastContainer" class="toast-container"></div>
 
     <script src="script.js"></script>
 </body>
